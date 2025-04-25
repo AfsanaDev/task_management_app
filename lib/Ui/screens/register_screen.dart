@@ -1,6 +1,6 @@
-import 'package:api_class/Ui/widgets/centered_circuler_progress_indicator.dart';
-import 'package:api_class/Ui/widgets/screen_background.dart';
-import 'package:api_class/Ui/widgets/snack_bar_message.dart';
+import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
+import 'package:api_class/ui/widgets/screen_background.dart';
+import 'package:api_class/ui/widgets/snack_bar_message.dart';
 import 'package:api_class/data/service/nertwork_client.dart';
 import 'package:api_class/data/utils/urls.dart';
 import 'package:email_validator/email_validator.dart';

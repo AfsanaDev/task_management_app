@@ -1,8 +1,8 @@
-import 'package:api_class/Ui/screens/add_new_task_screen.dart';
-import 'package:api_class/Ui/widgets/centered_circuler_progress_indicator.dart';
-import 'package:api_class/Ui/widgets/snack_bar_message.dart';
-import 'package:api_class/Ui/widgets/summary_card.dart';
-import 'package:api_class/Ui/widgets/task_card.dart';
+import 'package:api_class/ui/screens/add_new_task_screen.dart';
+import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
+import 'package:api_class/ui/widgets/snack_bar_message.dart';
+import 'package:api_class/ui/widgets/summary_card.dart';
+import 'package:api_class/ui/widgets/task_card.dart';
 import 'package:api_class/data/models/task_list_model.dart';
 import 'package:api_class/data/models/task_model.dart';
 import 'package:api_class/data/models/task_status_count_list_model.dart';

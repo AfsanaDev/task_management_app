@@ -1,8 +1,8 @@
-import 'package:api_class/Ui/screens/cancled_task_screen.dart';
-import 'package:api_class/Ui/screens/completed_task_screen.dart';
-import 'package:api_class/Ui/screens/new_task_screen.dart';
-import 'package:api_class/Ui/screens/progess_task_screen.dart';
-import 'package:api_class/Ui/widgets/tm_app_bar.dart';
+import 'package:api_class/ui/screens/cancled_task_screen.dart';
+import 'package:api_class/ui/screens/completed_task_screen.dart';
+import 'package:api_class/ui/screens/new_task_screen.dart';
+import 'package:api_class/ui/screens/progess_task_screen.dart';
+import 'package:api_class/ui/widgets/tm_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:logger/logger.dart';
 

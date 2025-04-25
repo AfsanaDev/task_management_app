@@ -1,8 +1,8 @@
-import 'package:api_class/Ui/controllers/auth_controller.dart';
-import 'package:api_class/Ui/screens/login_screen.dart';
-import 'package:api_class/Ui/utils/assets_path.dart';
-import 'package:api_class/Ui/widgets/main_bottom_nav_screen.dart';
-import 'package:api_class/Ui/widgets/screen_background.dart';
+import 'package:api_class/ui/controllers/auth_controller.dart';
+import 'package:api_class/ui/screens/login_screen.dart';
+import 'package:api_class/ui/utils/assets_path.dart';
+import 'package:api_class/ui/widgets/main_bottom_nav_screen.dart';
+import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

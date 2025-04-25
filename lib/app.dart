@@ -1,5 +1,5 @@
 
-import 'package:api_class/Ui/screens/splash_screen.dart';
+import 'package:api_class/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 class TaskManagerApp extends StatefulWidget {

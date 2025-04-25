@@ -1,10 +1,10 @@
 import 'dart:convert';
 
-import 'package:api_class/Ui/controllers/auth_controller.dart';
-import 'package:api_class/Ui/widgets/centered_circuler_progress_indicator.dart';
-import 'package:api_class/Ui/widgets/screen_background.dart';
-import 'package:api_class/Ui/widgets/snack_bar_message.dart';
-import 'package:api_class/Ui/widgets/tm_app_bar.dart';
+import 'package:api_class/ui/controllers/auth_controller.dart';
+import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
+import 'package:api_class/ui/widgets/screen_background.dart';
+import 'package:api_class/ui/widgets/snack_bar_message.dart';
+import 'package:api_class/ui/widgets/tm_app_bar.dart';
 import 'package:api_class/data/models/update_profile_model.dart';
 import 'package:api_class/data/models/user_model.dart';
 import 'package:api_class/data/service/nertwork_client.dart';

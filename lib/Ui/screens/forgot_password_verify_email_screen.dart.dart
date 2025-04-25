@@ -1,12 +1,8 @@
 
-import 'package:api_class/Ui/controllers/auth_controller.dart';
-import 'package:api_class/Ui/screens/forgot_password_otp_verification_screen.dart';
-import 'package:api_class/Ui/widgets/centered_circuler_progress_indicator.dart';
-import 'package:api_class/Ui/widgets/screen_background.dart';
-import 'package:api_class/Ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/models/password_verify_email_model.dart';
-import 'package:api_class/data/models/task_model.dart';
-import 'package:api_class/data/models/user_model.dart';
+import 'package:api_class/ui/screens/forgot_password_otp_verification_screen.dart';
+import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
+import 'package:api_class/ui/widgets/screen_background.dart';
+import 'package:api_class/ui/widgets/snack_bar_message.dart';
 import 'package:api_class/data/service/nertwork_client.dart';
 import 'package:api_class/data/utils/urls.dart';
 import 'package:email_validator/email_validator.dart';

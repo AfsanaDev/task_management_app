@@ -1,9 +1,8 @@
 
-import 'package:api_class/Ui/screens/login_screen.dart';
-import 'package:api_class/Ui/screens/reset_password_screen.dart';
-import 'package:api_class/Ui/widgets/screen_background.dart';
-import 'package:api_class/Ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/models/task_model.dart';
+import 'package:api_class/ui/screens/login_screen.dart';
+import 'package:api_class/ui/screens/reset_password_screen.dart';
+import 'package:api_class/ui/widgets/screen_background.dart';
+import 'package:api_class/ui/widgets/snack_bar_message.dart';
 import 'package:api_class/data/service/nertwork_client.dart';
 import 'package:api_class/data/utils/urls.dart';
 import 'package:flutter/gestures.dart';

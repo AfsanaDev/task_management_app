@@ -1,4 +1,4 @@
-import 'package:api_class/Ui/utils/assets_path.dart';
+import 'package:api_class/ui/utils/assets_path.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
