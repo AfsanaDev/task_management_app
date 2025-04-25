@@ -4,6 +4,7 @@ import 'package:api_class/Ui/screens/new_task_screen.dart';
 import 'package:api_class/Ui/screens/progess_task_screen.dart';
 import 'package:api_class/Ui/widgets/tm_app_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
 
 class MainBottomNavScreen extends StatefulWidget {
   const MainBottomNavScreen({super.key});
@@ -26,7 +27,17 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
   Widget build(BuildContext context) {
     
     return Scaffold(
-      appBar:const TmAppBar(),
+      appBar: TmAppBar(
+        onUpdate: (){
+          setState(() {
+            
+          });
+          Logger().w('Got the update from main bottom');
+          
+        },
+        
+      ),
+      
       body: _screen[_selectedIndex],
       bottomNavigationBar: NavigationBar(
         selectedIndex: _selectedIndex, //current sele

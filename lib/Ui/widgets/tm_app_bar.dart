@@ -1,3 +1,4 @@
+
 import 'dart:convert';
 
 import 'package:api_class/Ui/controllers/auth_controller.dart';
@@ -6,9 +7,10 @@ import 'package:api_class/Ui/screens/update_profile_screen.dart';
 import 'package:flutter/material.dart';
 
 class TmAppBar extends StatelessWidget implements PreferredSizeWidget {
-  const TmAppBar({super.key, this.fromProfileSection});
+  const TmAppBar({super.key, this.fromProfileSection, this.onUpdate});
 
   final bool? fromProfileSection;
+  final VoidCallback? onUpdate;
   @override
   Widget build(BuildContext context) {
     TextTheme textTheme= Theme.of(context).textTheme;
@@ -57,7 +59,11 @@ class TmAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
   void _onTapProfileSection(BuildContext context)async{
     await AuthController.getUserInformation();
-    
+   if (onUpdate != null) {
+    onUpdate!();
+  } else {
+    debugPrint("No onUpdate callback provided.");
+  }
     Navigator.push(context, MaterialPageRoute(
       builder: (context)=>  UpdateProfileScreen(),),);
   }

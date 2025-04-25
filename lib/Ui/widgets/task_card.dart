@@ -7,7 +7,7 @@ import 'package:api_class/data/utils/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-enum TaskStatus { sNew, progress, completed, Cancelled }
+enum TaskStatus { sNew, progress, completed, cancelled }
 
 class TaskCard extends StatefulWidget {
   const TaskCard({
@@ -99,7 +99,7 @@ class _TaskCardState extends State<TaskCard> {
         color = Colors.purple;
       case TaskStatus.completed:
         color = Colors.green;
-      case TaskStatus.Cancelled:
+      case TaskStatus.cancelled:
         color = Colors.red;
     }
     return color;

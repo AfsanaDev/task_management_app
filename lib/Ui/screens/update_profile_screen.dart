@@ -232,6 +232,9 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       await AuthController.saveUserInformation(
         AuthController.token!, userModel);
       await AuthController.getUserInformation();  
+      setState(() {
+        
+      });
     }else{
       showSnackBarMessage(context, response.errorMessage, true);
     }
