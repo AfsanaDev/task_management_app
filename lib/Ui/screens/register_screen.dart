@@ -1,11 +1,11 @@
+import 'package:api_class/ui/controllers/registration_controller.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
 import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/service/nertwork_client.dart';
-import 'package:api_class/data/utils/urls.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -22,7 +22,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
   final TextEditingController _mobileController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
   bool _isHiddenPassword = true;
-  bool _resigtrationInProgress = false;
+
+  final RegistrationController _registerController = Get.find<RegistrationController>();
+
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
@@ -137,13 +139,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     },
                   ),
                   const SizedBox(height: 16,),
-                  Visibility(
-                    visible: _resigtrationInProgress ==false,
-                    replacement: const CenteredCirculerProgressIndicator(),
-                    child: ElevatedButton(
-                     
-                      onPressed:_onTapSubmitButton,
-                     child: const Icon(Icons.arrow_circle_right_outlined)),
+                  GetBuilder<RegistrationController>(
+                    builder: (controller) {
+                      return Visibility(
+                        visible: controller.registrationInProgress ==false,
+                        replacement: const CenteredCirculerProgressIndicator(),
+                        child: ElevatedButton(
+                         
+                          onPressed:_onTapSubmitButton,
+                         child: const Icon(Icons.arrow_circle_right_outlined)),
+                      );
+                    }
                   ),
                    const SizedBox(height: 32,),
                    Center(
@@ -183,25 +189,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
   }
 
   Future <void> _registerUser() async{
-    _resigtrationInProgress = true;
-    setState(() { 
-    });
-    Map<String, dynamic> requestBody ={
-        "email": _emailController.text.trim(),
-      "firstName":  _firstNameController.text.trim(),
-      "lastName": _lastNameController.text.trim(),
-      "mobile": _mobileController.text.trim(),
-      "password": _passwordController.text
-    };
-    NetworkResponse response = await NetworkClient.postRequest(url: Urls.registerUrl, body: requestBody);
-     _resigtrationInProgress = false;
-    setState(() { 
-    });
-    if( response.isSuccess){
+    
+    final bool isSuccess = await _registerController.registerUser(
+      _emailController.text.trim(),
+      _firstNameController.text.trim(),
+      _lastNameController.text.trim(),
+      _mobileController.text.trim(),
+      _passwordController.text);
+  
+    //NetworkResponse response = await NetworkClient.postRequest(url: Urls.registerUrl, body: requestBody);
+ 
+    if(isSuccess){
       _clearTextFields();
       showSnackBarMessage(context, 'User Registration Successfull');
     }else{
-      showSnackBarMessage(context, response.errorMessage, true);
+      showSnackBarMessage(context, _registerController.errorMessage!, true);
     
     }
   }
