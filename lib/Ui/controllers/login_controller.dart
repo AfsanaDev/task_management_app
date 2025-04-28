@@ -2,7 +2,7 @@ import 'package:api_class/data/models/login_model.dart';
 import 'package:api_class/data/service/nertwork_client.dart';
 import 'package:api_class/data/utils/urls.dart';
 import 'package:api_class/ui/controllers/auth_controller.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 
 class LoginController extends GetxController{ 
 
