@@ -1,18 +1,18 @@
 
+import 'package:api_class/ui/controllers/forgot_password_verify_email_controller.dart';
 import 'package:api_class/ui/screens/forgot_password_otp_verification_screen.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
 import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/service/nertwork_client.dart';
-import 'package:api_class/data/utils/urls.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class ForgotPasswordVerifyEmailScreen extends StatefulWidget {
   
 
-   ForgotPasswordVerifyEmailScreen({super.key, required this.email,
+   const ForgotPasswordVerifyEmailScreen({super.key, required this.email,
     
   });
 
@@ -29,7 +29,8 @@ class _ForgotPasswordVerifyEmailScreenState extends State<ForgotPasswordVerifyEm
   final TextEditingController _emailController = TextEditingController();
   
   final GlobalKey <FormState> _formKey = GlobalKey<FormState>();
-  bool _passwordVerifyEmailInProgress = false;
+  
+  final ForgotPasswordVerifyEmailController _forgotPasswordVerifyEmailController = Get.find<ForgotPasswordVerifyEmailController>();
 
   @override
   Widget build(BuildContext context) {
@@ -71,15 +72,19 @@ class _ForgotPasswordVerifyEmailScreenState extends State<ForgotPasswordVerifyEm
                 ),
                 
                 const SizedBox(height: 16,),
-                Visibility(
-                  visible: _passwordVerifyEmailInProgress == false,
-                  replacement: const CenteredCirculerProgressIndicator(),
-                  child: ElevatedButton(
-                   
-                    onPressed:_onTabSubmitButton,
-                   child: const Icon(Icons.arrow_circle_right_outlined)),
-                   
-                   
+                GetBuilder<ForgotPasswordVerifyEmailController>(
+                  builder: (controller) {
+                    return Visibility(
+                      visible:controller.passwordVerifyEmailInProgress == false,
+                      replacement: const CenteredCirculerProgressIndicator(),
+                      child: ElevatedButton(
+                       
+                        onPressed:_onTabSubmitButton,
+                       child: const Icon(Icons.arrow_circle_right_outlined)),
+                       
+                       
+                    );
+                  }
                 ),
                 
                  const SizedBox(height: 32,),
@@ -118,46 +123,24 @@ class _ForgotPasswordVerifyEmailScreenState extends State<ForgotPasswordVerifyEm
   }
 
 
-  void _passwordVerifyEmail()async{
-    _passwordVerifyEmailInProgress = true;
-    setState(() {
-    });
+  Future<void> _passwordVerifyEmail()async{
+   
 
-    NetworkResponse response = await NetworkClient.getRequest(
-      url: Urls.recoverVerifyEmailUrl(_emailController.text),  );
-       _passwordVerifyEmailInProgress = false;
-    setState(() {
-    });
+    final bool isSuccess = await _forgotPasswordVerifyEmailController.passwordVerifyEmail(_emailController.text.trim());
+   
 
-      if(response.isSuccess){
+      if(isSuccess){
         showSnackBarMessage(context, 'Email sent successfully');
        // print(response.data);
         Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) =>  ForgotPasswordOtpVerificationScreen(email: _emailController.text,)), (pre)=>false,);
-        //Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordOtpVerificationScreen(otp: 0,)),);
+      
       }else{
         
       setState(() {});
-      showSnackBarMessage(context, response.errorMessage, true);
+      showSnackBarMessage(context, _forgotPasswordVerifyEmailController.errorMessage!, true);
       }
 
-    // Map<String, dynamic> requestBody ={
-    //   "email": _emailController.text.trim(),
-    // };
-
-    // NetworkResponse response = await NetworkClient.getRequest(
-    //   url: Urls.recoverVerifyEmailUrl(widget.taskModel.email),);
-
-    // _passwordVerifyEmailInProgress = false;
-    // setState(() {
-      
-    // });
-
-    // if(response.isSuccess){
-    //   PasswordVerifyEmailModel passwordVerifyEmailModel = PasswordVerifyEmailModel.fromJson(response.data!);
-
-    //   AuthController.saveUserEmailInformation(_emailController.text);
-    //    Navigator.push(context, MaterialPageRoute(builder: (context) => const ForgotPasswordPinVerificationScreen()),);
-    // }
+  
 
   }
 

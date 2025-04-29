@@ -1,12 +1,12 @@
 
+import 'package:api_class/ui/controllers/forgot_password_otp_verification_controller.dart';
 import 'package:api_class/ui/screens/login_screen.dart';
 import 'package:api_class/ui/screens/reset_password_screen.dart';
 import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/service/nertwork_client.dart';
-import 'package:api_class/data/utils/urls.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 class ForgotPasswordOtpVerificationScreen extends StatefulWidget {
@@ -22,8 +22,7 @@ class _ForgotPasswordOtpVerificationScreenState extends State<ForgotPasswordOtpV
   final TextEditingController _pinCondeController = TextEditingController();
   
   final GlobalKey <FormState> _formKey = GlobalKey<FormState>();
-
-  bool _otpVerificationInProgress = false;
+  final ForgotPasswordOtpVerificationController _forgotPasswordOtpVerificationController = Get.find<ForgotPasswordOtpVerificationController>();
 
 
   @override
@@ -111,19 +110,14 @@ class _ForgotPasswordOtpVerificationScreenState extends State<ForgotPasswordOtpV
   }
 
   Future <void> _otpVerification()async{
-    _otpVerificationInProgress == true;
-    setState(() {
-      
-    });
+   
 
-    NetworkResponse response = await NetworkClient.getRequest(
-      url: Urls.recoverVerifyOtpUrl(widget.email, _pinCondeController.text));
-
-      if(response.isSuccess){
-        showSnackBarMessage(context, response.statusCode.toString(),);
+      final bool isSuccess = await _forgotPasswordOtpVerificationController.otpVerification(widget.email, _pinCondeController.text); 
+      if(isSuccess){
+        
         Navigator.push(context, MaterialPageRoute( builder: (context)=>  ResetPasswordScreen(email:widget.email, otp: _pinCondeController.text,),));
       }else{
-        showSnackBarMessage(context, response.errorMessage, true);
+        showSnackBarMessage(context, _forgotPasswordOtpVerificationController.errorMessage!, true);
       }
   }
   void _onTapSignInButton(){

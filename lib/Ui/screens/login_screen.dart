@@ -1,5 +1,5 @@
 import 'package:api_class/ui/controllers/login_controller.dart';
-import 'package:api_class/ui/screens/forgot_password_verify_email_screen.dart.dart';
+import 'package:api_class/ui/screens/forgot_password_verify_email_screen.dart';
 import 'package:api_class/ui/screens/register_screen.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
 import 'package:api_class/ui/widgets/main_bottom_nav_screen.dart';
