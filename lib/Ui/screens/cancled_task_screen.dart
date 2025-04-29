@@ -1,12 +1,10 @@
 
+import 'package:api_class/ui/controllers/canceled_task_controller.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
 import 'package:api_class/ui/widgets/task_card.dart';
-import 'package:api_class/data/models/task_list_model.dart';
-import 'package:api_class/data/models/task_model.dart';
-import 'package:api_class/data/service/nertwork_client.dart';
-import 'package:api_class/data/utils/urls.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class CanceledTaskScreen extends StatefulWidget {
   const CanceledTaskScreen({super.key});
@@ -17,8 +15,8 @@ class CanceledTaskScreen extends StatefulWidget {
 
 class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
 
-  bool _getCanceledTaskInProgress = false;
-  List<TaskModel> _canceledTaskList =[];
+  //List<TaskModel> _canceledTaskList =[];
+  final CanceledTaskController _canceledTaskController = Get.find<CanceledTaskController>();
 
   @override
   void initState() {
@@ -29,46 +27,37 @@ class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
 
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Visibility(
-        visible: _getCanceledTaskInProgress == false,
-        replacement: const CenteredCirculerProgressIndicator(),
-        child: Padding(
-          padding: const EdgeInsets.only(top: 16),
-          child: ListView.separated(
-            itemCount: _canceledTaskList.length,
-            itemBuilder: (context, index){
-               return TaskCard(taskStatus: TaskStatus.cancelled,
-                taskModel: _canceledTaskList[index],
-                refreshList: _getAllCanceledTaskList,);
-          
-          }, separatorBuilder: (context, index) => const SizedBox(height: 8,),),
-        ),
+      body: GetBuilder<CanceledTaskController>(
+        builder: (controller) {
+          return Visibility(
+            visible: controller.getCanceledTaskInProgress == false,
+            replacement: const CenteredCirculerProgressIndicator(),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 16),
+              child: ListView.separated(
+                itemCount: controller.canceledTaskList.length,
+                itemBuilder: (context, index){
+                   return TaskCard(taskStatus: TaskStatus.cancelled,
+                    taskModel: controller.canceledTaskList[index],
+                    refreshList: _getAllCanceledTaskList,);
+              
+              }, separatorBuilder: (context, index) => const SizedBox(height: 8,),),
+            ),
+          );
+        }
       ),
     );
   }
 
   Future<void> _getAllCanceledTaskList()async{
-    _getCanceledTaskInProgress = true;
-    setState(() {
-        
-      });
-
-    final NetworkResponse response = await NetworkClient.getRequest(url: Urls.canceledTaskListUrl);
-
-    if(response.isSuccess){
-      
-      // _getNewTaskInProgress = true;
-      // setState(() {
-        
-      // });
-     TaskListModel taskListModel = TaskListModel.fromJson(response.data ?? {});
-     _canceledTaskList = taskListModel.taskList;
+ 
+    final bool isSuccess = await _canceledTaskController.getAllCanceledTaskList();
+    
+    if(isSuccess){
+   
     }else{
-      showSnackBarMessage(context, response.errorMessage, true);
+      showSnackBarMessage(context, _canceledTaskController.errorMessage!, true);
     }
-    _getCanceledTaskInProgress = false;
-      setState(() {
-        
-      });
+    
   }
 }
