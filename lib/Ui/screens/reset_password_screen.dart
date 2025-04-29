@@ -4,8 +4,6 @@ import 'package:api_class/ui/screens/login_screen.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
 import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/service/nertwork_client.dart';
-import 'package:api_class/data/utils/urls.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
