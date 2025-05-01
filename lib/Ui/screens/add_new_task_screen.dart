@@ -1,7 +1,5 @@
 import 'package:api_class/ui/controllers/add_new_task_controller.dart';
-import 'package:api_class/ui/screens/new_task_screen.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
-import 'package:api_class/ui/widgets/main_bottom_nav_screen.dart';
 import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
 import 'package:api_class/ui/widgets/tm_app_bar.dart';
@@ -92,10 +90,7 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   void _onTapSubmitButton(){
     if(_formKey.currentState!.validate()){
       _addNewTask();
-      //  Navigator.push(context, MaterialPageRoute(builder: (context)=>const MainBottomNavScreen(),));
-      //  setState(() {
-         
-      //  });
+        
     }
   }
 
@@ -110,11 +105,8 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     if(isSuccess){
       _clearTextFields();
       showSnackBarMessage(context, 'New task added successfully');
-      setState(() {
-        
-      });
-      
-      
+     // Navigator.push(context, MaterialPageRoute(builder: (context)=>const NewTaskScreen(),));
+       
      
     }else{
       showSnackBarMessage(context, _addNewTaskController.errorMessage!);

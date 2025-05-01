@@ -112,9 +112,7 @@ class _NewTaskScreenState extends State<NewTaskScreen> {
 
      final bool isSuccess = await _newTaskController.getNewTaskList();
     if(isSuccess){
-      setState(() {
-        
-      });
+      
       showSnackBarMessage(context, _newTaskController.errorMessage!, true);
     }
   

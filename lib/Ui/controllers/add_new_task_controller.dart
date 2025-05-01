@@ -19,9 +19,10 @@ class AddNewTaskController extends GetxController{
       "description": description,
       "status":"New"
     };
-
+    
     final NetworkResponse response = await NetworkClient.postRequest(url: Urls.createTaskUrl , body: requestBody);
-
+    _addNewTaskInProgress == false;
+    update();
     if(response.isSuccess){
       update();
      isSuccess = true;
