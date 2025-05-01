@@ -1,32 +1,29 @@
+import 'package:api_class/ui/controllers/task_card_controller.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
-import 'package:api_class/data/models/password_verify_email_model.dart';
 import 'package:api_class/data/models/task_model.dart';
-import 'package:api_class/data/service/nertwork_client.dart';
-import 'package:api_class/data/utils/urls.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
 enum TaskStatus { sNew, progress, completed, cancelled }
 
 class TaskCard extends StatefulWidget {
   const TaskCard({
-    super.key,
-    required this.taskStatus,
-    required this.taskModel,
-    required this.refreshList, 
+    super.key, required this.taskStatus, required this.taskModel, required this.refreshList, 
   });
 
-  final TaskStatus taskStatus;
-  final TaskModel taskModel;
-  final VoidCallback refreshList;
+    final TaskStatus taskStatus;
+    final TaskModel taskModel;
+    final VoidCallback refreshList; 
 
   @override
   State<TaskCard> createState() => _TaskCardState();
 }
 
 class _TaskCardState extends State<TaskCard> {
-  bool _inProgress = false;
+  final TaskCardController _taskCardController = Get.find<TaskCardController>();
+  
   DateTime now = DateTime.now();
 
   //final dateTimeFormate = DateFormat('dd-MM-yyyy');
@@ -49,7 +46,6 @@ class _TaskCardState extends State<TaskCard> {
               style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             Text(widget.taskModel.description),
-            // TODO: Format it with DateFormatter (intl)
            
            Text('Date: $formatted'),
             Row(
@@ -67,20 +63,24 @@ class _TaskCardState extends State<TaskCard> {
                   side: BorderSide.none,
                 ),
                 const Spacer(),
-                Visibility(
-                  visible: _inProgress == false,
-                  replacement: const CenteredCirculerProgressIndicator(),
-                  child: Row(
-                    children: [
-                      IconButton(
-                        onPressed:_deleteTask,
-                        icon: const Icon(Icons.delete, color: Colors.red,),
+                GetBuilder<TaskCardController>(
+                  builder: (controller) {
+                    return Visibility(
+                      visible: controller.inProgress == false,
+                      replacement: const CenteredCirculerProgressIndicator(),
+                      child: Row(
+                        children: [
+                          IconButton(
+                            onPressed:_deleteTask,
+                            icon: const Icon(Icons.delete, color: Colors.red,),
+                          ),
+                          IconButton(
+                              onPressed:_showUpdateStatusDialog,
+                              icon: const Icon(Icons.edit, color: Colors.blue,)),
+                        ],
                       ),
-                      IconButton(
-                          onPressed:_showUpdateStatusDialog,
-                          icon: const Icon(Icons.edit, color: Colors.blue,)),
-                    ],
-                  ),
+                    );
+                  }
                 )
               ],
             )
@@ -142,6 +142,7 @@ class _TaskCardState extends State<TaskCard> {
                 _popDialog();
                 if (isSelected('Completed')) return;
                 _changeTaskStatus('Completed');
+                
               },
               title: const Text('Completed'),
               trailing: isSelected('Completed')
@@ -172,36 +173,22 @@ class _TaskCardState extends State<TaskCard> {
   bool isSelected(String status) => widget.taskModel.status == status;
   
   Future<void> _changeTaskStatus(String status) async {
-    _inProgress = true;
-    setState(() {});
-    final NetworkResponse response = await NetworkClient.getRequest(
-        url: Urls.updateTaskStatusUrl(widget.taskModel.id, status));
-        print(widget.taskModel.id);
-
-    _inProgress = false;
-    setState(() {
-      
-    });
-    if (response.isSuccess) {
+   bool isSuccess = await _taskCardController.changeTaskStatus(status, widget.taskModel.id);
+    if (isSuccess) {
       widget.refreshList();
     } else {
-      setState(() {});
-      showSnackBarMessage(context, response.errorMessage, true);
+      
+      showSnackBarMessage(context,_taskCardController.errorMessage!, true);
     }
   }
 
   Future<void> _deleteTask() async {
-    _inProgress = true;
-    setState(() {});
-    final NetworkResponse response = await NetworkClient.getRequest(
-        url: Urls.deleteTaskUrl(widget.taskModel.id));
-
-    _inProgress = false;
-    if (response.isSuccess) {
+   bool isSuccess = await _taskCardController.deleteTask(widget.taskModel.id);
+    if (isSuccess) {
       widget.refreshList();
     } else {
-      setState(() {});
-      showSnackBarMessage(context, response.errorMessage, true);
+      
+      showSnackBarMessage(context,_taskCardController.errorMessage!, true);
     }
   }
 }

@@ -21,6 +21,7 @@ class _MainBottomNavScreenState extends State<MainBottomNavScreen> {
    ProgessTaskScreen(),
    CompletedTaskScreen(),
    CanceledTaskScreen(),
+   
   ];
   @override
  
