@@ -17,7 +17,6 @@ class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
 
   //List<TaskModel> _canceledTaskList =[];
   final CanceledTaskController _canceledTaskController = Get.find<CanceledTaskController>();
-
   @override
   void initState() {
     _getAllCanceledTaskList();
@@ -54,6 +53,7 @@ class _CanceledTaskScreenState extends State<CanceledTaskScreen> {
     final bool isSuccess = await _canceledTaskController.getAllCanceledTaskList();
     
     if(isSuccess){
+      
    
     }else{
       showSnackBarMessage(context, _canceledTaskController.errorMessage!, true);

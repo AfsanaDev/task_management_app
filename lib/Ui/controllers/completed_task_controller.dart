@@ -24,6 +24,7 @@ class CompletedTaskController extends GetxController{
     if(response.isSuccess){
      TaskListModel taskListModel = TaskListModel.fromJson(response.data ?? {});
      _completedTaskList = taskListModel.taskList;
+     update();
      isSuccess = true;
      _errorMessage = null;
     }else{

@@ -1,5 +1,7 @@
 import 'package:api_class/data/models/task_list_model.dart';
 import 'package:api_class/data/models/task_model.dart';
+import 'package:api_class/data/models/task_status_count_list_model.dart';
+import 'package:api_class/data/models/task_status_count_model.dart';
 import 'package:api_class/data/service/nertwork_client.dart';
 import 'package:api_class/data/utils/urls.dart';
 import 'package:get/get.dart';
@@ -12,6 +14,12 @@ String? get errorMessage => _errorMessage;
 List<TaskModel> _newTaskList =[];
 
 List<TaskModel> get newTaskList => _newTaskList;
+
+bool _getStatusCountInProgress = false;
+bool get getStatusCountInProgress => _getStatusCountInProgress;
+List<TaskStatusCountModel> _taskStatusCountList =[];
+
+List<TaskStatusCountModel> get taskStatusCountList => _taskStatusCountList;
 
  Future<bool> getNewTaskList()async{
   bool isSuccess = false;
@@ -32,6 +40,32 @@ List<TaskModel> get newTaskList => _newTaskList;
     update();
 
       return isSuccess;
+  }
+
+
+  Future<bool> getAllTaskStatusCount()async{
+    bool isSuccess = false;
+    _getStatusCountInProgress = true;
+    update();
+
+    final NetworkResponse response = await NetworkClient.getRequest(url: Urls.taskStatusCountUrl);
+      _getStatusCountInProgress = false;
+      update();
+
+    if(response.isSuccess){
+     
+     TaskStatusCountListModel taskStatusCountListModel = TaskStatusCountListModel.fromJson(response.data ?? {});
+     _taskStatusCountList = taskStatusCountListModel.statusCountList;
+     update();
+     isSuccess = true;
+     _errorMessage = null;
+    }else{
+      _errorMessage = response.errorMessage;
+    }
+    _getStatusCountInProgress = false;
+    update();
+
+    return isSuccess;
   }
 
 }

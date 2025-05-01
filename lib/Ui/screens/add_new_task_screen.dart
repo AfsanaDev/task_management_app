@@ -1,5 +1,7 @@
 import 'package:api_class/ui/controllers/add_new_task_controller.dart';
+import 'package:api_class/ui/screens/new_task_screen.dart';
 import 'package:api_class/ui/widgets/centered_circuler_progress_indicator.dart';
+import 'package:api_class/ui/widgets/main_bottom_nav_screen.dart';
 import 'package:api_class/ui/widgets/screen_background.dart';
 import 'package:api_class/ui/widgets/snack_bar_message.dart';
 import 'package:api_class/ui/widgets/tm_app_bar.dart';
@@ -8,7 +10,7 @@ import 'package:get/get.dart';
 
 class AddNewTaskScreen extends StatefulWidget {
   const AddNewTaskScreen({super.key});
-
+  
   @override
   State<AddNewTaskScreen> createState() => _AddNewTaskScreenState();
 }
@@ -90,7 +92,10 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
   void _onTapSubmitButton(){
     if(_formKey.currentState!.validate()){
       _addNewTask();
-
+      //  Navigator.push(context, MaterialPageRoute(builder: (context)=>const MainBottomNavScreen(),));
+      //  setState(() {
+         
+      //  });
     }
   }
 
@@ -103,7 +108,14 @@ class _AddNewTaskScreenState extends State<AddNewTaskScreen> {
     //final NetworkResponse response = await NetworkClient.postRequest(url: Urls.createTaskUrl , body: requestBody);
 
     if(isSuccess){
+      _clearTextFields();
       showSnackBarMessage(context, 'New task added successfully');
+      setState(() {
+        
+      });
+      
+      
+     
     }else{
       showSnackBarMessage(context, _addNewTaskController.errorMessage!);
     }
